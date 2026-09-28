@@ -1,15 +1,51 @@
-<h1>Detail Buku</h1>
+@extends('layouts.app')
 
-@if ($buku)
-    <h2>{{ $buku['judul'] }}</h2>
+@section('title', ($buku['judul'] ?? 'Buku tidak ditemukan') . ' — BookStore')
 
-    <p>Penulis: {{ $buku['penulis'] }}</p>
+@section('content')
 
-    <p>Tahun: {{ $buku['tahun'] }}</p>
+    @if ($buku)
 
-    <a href="/buku">Kembali ke Daftar Buku</a>
-@else
-    <p>Buku dengan ID {{ $id }} tidak ditemukan.</p>
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ asset('images/sampul.jpg') }}"
+                     class="img-fluid rounded"
+                     alt="Sampul {{ $buku['judul'] }}">
+            </div>
 
-    <a href="/buku">Kembali ke Daftar Buku</a>
-@endif
+            <div class="col-md-8">
+                <h1>{{ $buku['judul'] }}</h1>
+
+                <p class="text-muted">
+                    Penulis: {{ $buku['penulis'] }}
+                </p>
+
+                <p class="harga-buku fs-4">
+                    Rp{{ number_format($buku['harga'], 0, ',', '.') }}
+                </p>
+
+                <a href="{{ url('/buku') }}"
+                   class="btn btn-outline-secondary">
+                    &larr; Kembali ke daftar buku
+                </a>
+            </div>
+        </div>
+
+    @else
+
+        <div class="alert alert-warning">
+            <h1 class="h4">Buku tidak ditemukan</h1>
+
+            <p class="mb-0">
+                Tidak ada buku dengan id {{ $id }}.
+            </p>
+        </div>
+
+        <a href="{{ url('/buku') }}"
+           class="btn btn-outline-secondary mt-3">
+            &larr; Kembali ke daftar buku
+        </a>
+
+    @endif
+
+@endsection
