@@ -11,7 +11,7 @@ class BookController extends Controller
         $daftarBuku = Book::with('category')->get();
 
         return view('buku.index', [
-            'daftarBuku' => $daftarBuku
+            'daftarBuku' => $daftarBuku,
         ]);
     }
 
@@ -21,7 +21,7 @@ class BookController extends Controller
 
         return view('buku.show', [
             'buku' => $buku,
-            'id' => $id
+            'id' => $id,
         ]);
     }
 }
