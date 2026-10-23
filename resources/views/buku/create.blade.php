@@ -13,12 +13,9 @@
 
         <div class="mb-3">
             <label for="title" class="form-label">Judul</label>
-            <input type="text"
-                   id="title"
-                   name="title"
+            <input type="text" id="title" name="title"
                    class="form-control @error('title') is-invalid @enderror"
                    value="{{ old('title') }}">
-
             @error('title')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -26,12 +23,9 @@
 
         <div class="mb-3">
             <label for="author_name" class="form-label">Penulis</label>
-            <input type="text"
-                   id="author_name"
-                   name="author_name"
+            <input type="text" id="author_name" name="author_name"
                    class="form-control @error('author_name') is-invalid @enderror"
                    value="{{ old('author_name') }}">
-
             @error('author_name')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -39,10 +33,8 @@
 
         <div class="mb-3">
             <label for="category_id" class="form-label">Kategori</label>
-            <select id="category_id"
-                    name="category_id"
+            <select id="category_id" name="category_id"
                     class="form-select @error('category_id') is-invalid @enderror">
-
                 <option value="">-- Pilih kategori --</option>
 
                 @foreach ($daftarKategori as $kategori)
@@ -60,10 +52,8 @@
 
         <div class="mb-3">
             <label for="publisher_id" class="form-label">Penerbit</label>
-            <select id="publisher_id"
-                    name="publisher_id"
+            <select id="publisher_id" name="publisher_id"
                     class="form-select @error('publisher_id') is-invalid @enderror">
-
                 <option value="">-- Pilih penerbit --</option>
 
                 @foreach ($daftarPenerbit as $penerbit)
@@ -81,13 +71,35 @@
 
         <div class="mb-3">
             <label for="price" class="form-label">Harga (Rp)</label>
-            <input type="text"
-                   id="price"
-                   name="price"
+            <input type="text" id="price" name="price"
                    class="form-control @error('price') is-invalid @enderror"
                    value="{{ old('price') }}">
 
             @error('price')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="published_year" class="form-label">
+                Tahun Terbit (Opsional)
+            </label>
+
+            <input type="number"
+                   id="published_year"
+                   name="published_year"
+                   class="form-control @error('published_year') is-invalid @enderror"
+                   value="{{ old('published_year') }}"
+                   min="1900"
+                   max="2100"
+                   placeholder="Contoh: 2025">
+
+            <div class="form-text">
+                Isi tahun terbit antara 1900 sampai 2100.
+                Boleh dikosongkan.
+            </div>
+
+            @error('published_year')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>

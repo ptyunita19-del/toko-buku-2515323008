@@ -123,6 +123,7 @@ class BookController extends Controller
             'publisher_id' => 'required|exists:publishers,id',
             'price' => 'required|numeric|min:0|max:99999999',
             'cover' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'published_year' => 'nullable|integer|min:1900|max:2100',
         ];
     }
 
@@ -144,6 +145,10 @@ class BookController extends Controller
             'cover.image' => 'Sampul harus berupa gambar.',
             'cover.mimes' => 'Sampul harus berformat JPG atau PNG.',
             'cover.max' => 'Ukuran sampul maksimal 2 MB.',
+
+            'published_year.integer' => 'Tahun terbit harus berupa angka bulat.',
+            'published_year.min' => 'Tahun terbit minimal 1900.',
+            'published_year.max' => 'Tahun terbit maksimal 2100.',
         ];
     }
 }

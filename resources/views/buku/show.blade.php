@@ -26,6 +26,12 @@
                     Penerbit: {{ $buku->publisher?->name ?? 'Belum diisi' }}
                 </p>
 
+                @if ($buku->published_year)
+                    <p class="text-muted mb-1">
+                        Tahun Terbit: {{ $buku->published_year }}
+                    </p>
+                @endif
+
                 <p class="harga-buku fs-4">
                     Rp{{ number_format($buku->price, 0, ',', '.') }}
                 </p>
