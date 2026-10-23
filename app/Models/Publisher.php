@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Publisher extends Model
 {
-    /**
-     * Kolom yang boleh diisi melalui create() dan update().
-     */
     protected $fillable = [
         'name',
         'city',
     ];
+
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class);
+    }
 }

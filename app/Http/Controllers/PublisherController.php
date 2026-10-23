@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Database\QueryException;
 
 class PublisherController extends Controller
 {
@@ -70,7 +71,8 @@ class PublisherController extends Controller
                 'required',
                 'string',
                 'max:100',
-                Rule::unique('publishers', 'name')->ignore($penerbit->id),
+                Rule::unique('publishers', 'name')
+                    ->ignore($penerbit->id),
             ],
             'city' => 'required|string|max:100',
         ], [
@@ -89,13 +91,29 @@ class PublisherController extends Controller
 
     /**
      * Menghapus penerbit.
+     * Penerbit yang masih digunakan buku tidak boleh dihapus.
      */
     public function destroy(string $id)
     {
         $penerbit = Publisher::findOrFail($id);
-        $penerbit->delete();
 
-        return redirect()->route('penerbit.index')
-            ->with('success', 'Penerbit berhasil dihapus.');
+        try {
+            $penerbit->delete();
+
+            return redirect()->route('penerbit.index')
+                ->with('success', 'Penerbit berhasil dihapus.');
+
+        } catch (QueryException $e) {
+
+            if ($e->getCode() === '23000') {
+                return redirect()->route('penerbit.index')
+                    ->with(
+                        'error',
+                        'Penerbit tidak dapat dihapus karena masih digunakan oleh buku.'
+                    );
+            }
+
+            throw $e;
+        }
     }
 }

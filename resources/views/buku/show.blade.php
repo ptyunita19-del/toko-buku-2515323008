@@ -1,62 +1,69 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Buku — BookStore')
+@section('title', ($buku->title ?? 'Buku tidak ditemukan') . ' — BookStore')
 
 @section('content')
-<div class="container py-4">
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                @php
-                    $sampul = [
-                        'Belajar PHP untuk Pemula' => 'php-pemula.jpg',
-                        'Laravel Dasar' => 'laravel-dasar.jpg',
-                        'Dasar-Dasar Basis Data' => 'basis-data.jpg',
-                        'MySQL untuk Pemula' => 'mysql-pemula.jpg',
-                        'Jaringan Komputer Dasar' => 'jaringan-dasar.jpg',
-                        'Administrasi Jaringan' => 'administrasi-jaringan.jpg',
-                    ];
-                @endphp
+    @if ($buku)
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ $buku->cover_url }}"
+                     class="img-fluid rounded"
+                     alt="Sampul {{ $buku->title }}">
+            </div>
 
-                <img
-                    src="{{ asset('images/' . ($sampul[$buku->title] ?? 'sampul.jpg')) }}"
-                    class="card-img-top"
-                    alt="Sampul {{ $buku->title }}"
-                >
+            <div class="col-md-8">
+                <span class="badge bg-secondary mb-2">
+                    {{ $buku->category->name }}
+                </span>
+
+                <h1>{{ $buku->title }}</h1>
+
+                <p class="text-muted mb-1">
+                    Penulis: {{ $buku->author_name }}
+                </p>
+
+                <p class="text-muted mb-1">
+                    Penerbit: {{ $buku->publisher?->name ?? 'Belum diisi' }}
+                </p>
+
+                <p class="harga-buku fs-4">
+                    Rp{{ number_format($buku->price, 0, ',', '.') }}
+                </p>
+
+                <a href="{{ url('/buku') }}"
+                   class="btn btn-outline-secondary">
+                    &larr; Kembali ke daftar buku
+                </a>
+
+                <a href="{{ route('buku.edit', $buku->id) }}"
+                   class="btn btn-outline-primary">
+                    Ubah
+                </a>
+
+                <form action="{{ route('buku.destroy', $buku->id) }}"
+                      method="POST"
+                      class="d-inline"
+                      onsubmit="return confirm('Yakin menghapus buku ini?')">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" class="btn btn-outline-danger">
+                        Hapus
+                    </button>
+                </form>
             </div>
         </div>
-
-        <div class="col-md-8">
-            <div class="card shadow-sm h-100">
-                <div class="card-body p-4">
-                    <h1 class="mb-4">{{ $buku->title }}</h1>
-
-                    <p>
-                        <strong>Penulis:</strong>
-                        {{ $buku->author_name ?? 'Tidak diketahui' }}
-                    </p>
-
-                    <p>
-                        <strong>Kategori:</strong>
-                        {{ $buku->category->name ?? 'Tanpa Kategori' }}
-                    </p>
-
-                    <p>
-                        <strong>Tahun Terbit:</strong>
-                        {{ $buku->year ?? 'Tidak diketahui' }}
-                    </p>
-
-                    <h3 class="mb-4">
-                        Rp {{ number_format($buku->price, 0, ',', '.') }}
-                    </h3>
-
-                    <a href="{{ route('buku.index') }}"
-                       class="btn btn-outline-secondary">
-                        &larr; Kembali ke Daftar Buku
-                    </a>
-                </div>
-            </div>
+    @else
+        <div class="alert alert-warning">
+            <h1 class="h4">Buku tidak ditemukan</h1>
+            <p class="mb-0">
+                Tidak ada buku dengan id {{ $id }}.
+            </p>
         </div>
-    </div>
-</div>
+
+        <a href="{{ url('/buku') }}"
+           class="btn btn-outline-secondary mt-3">
+            &larr; Kembali ke daftar buku
+        </a>
+    @endif
 @endsection
