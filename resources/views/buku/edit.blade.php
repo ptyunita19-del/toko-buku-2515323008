@@ -45,6 +45,7 @@
                     </option>
                 @endforeach
             </select>
+
             @error('category_id')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -63,6 +64,7 @@
                     </option>
                 @endforeach
             </select>
+
             @error('publisher_id')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -73,7 +75,25 @@
             <input type="text" id="price" name="price"
                    class="form-control @error('price') is-invalid @enderror"
                    value="{{ old('price', $buku->price) }}">
+
+            <div class="form-text">
+                Ketik angka saja, tanpa titik atau koma (contoh: 85000).
+            </div>
+
             @error('price')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stok</label>
+            <input type="number" id="stock" name="stock"
+                   class="form-control @error('stock') is-invalid @enderror"
+                   value="{{ old('stock', $buku->stock) }}"
+                   min="0"
+                   max="100000">
+
+            @error('stock')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
