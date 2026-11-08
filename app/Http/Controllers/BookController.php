@@ -17,7 +17,7 @@ class BookController extends Controller
         $kategoriId = $request->query('kategori');
         $penerbitId = $request->query('penerbit');
 
-        $daftarBuku = Book::with(['category', 'publisher'])
+        $queryBuku = Book::with(['category', 'publisher'])
 
             // Pencarian berdasarkan judul atau penulis
             ->when($kataKunci, function ($query, $kataKunci) {
@@ -38,12 +38,11 @@ class BookController extends Controller
             })
 
             // Urutkan buku terbaru
-            ->latest('id')
+            ->latest('id');
 
-            // Menampilkan 3 buku setiap halaman
+        // Pagination 3 buku setiap halaman
+        $daftarBuku = $queryBuku
             ->paginate(3)
-
-            // Mempertahankan pencarian dan semua filter
             ->withQueryString();
 
         return view('buku.index', [
