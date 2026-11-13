@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
@@ -58,11 +59,12 @@ class BookController extends Controller
     // Menampilkan form tambah buku
     public function create()
     {
-        return view('buku.create', [
-            'daftarKategori' => Category::orderBy('name')->get(),
-            'daftarPenerbit' => Publisher::orderBy('name')->get(),
-        ]);
-    }
+    return view('buku.create', [
+        'daftarKategori' => Category::orderBy('name')->get(),
+        'daftarPenerbit' => Publisher::orderBy('name')->get(),
+        'daftarPenulis' => Author::orderBy('name')->get(),
+    ]);
+}
 
     // Menyimpan buku baru
     public function store(Request $request)
@@ -88,7 +90,7 @@ class BookController extends Controller
     // Menampilkan detail buku dan rekomendasi buku serupa
     public function show($id)
     {
-        $buku = Book::with(['category', 'publisher'])->find($id);
+        $buku = Book::with(['category', 'publisher', 'author'])->find($id);
 
         $bukuSerupa = collect();
 
@@ -110,15 +112,16 @@ class BookController extends Controller
 
     // Menampilkan form edit buku
     public function edit($id)
-    {
-        $buku = Book::findOrFail($id);
+{
+    $buku = Book::findOrFail($id);
 
-        return view('buku.edit', [
-            'buku' => $buku,
-            'daftarKategori' => Category::orderBy('name')->get(),
-            'daftarPenerbit' => Publisher::orderBy('name')->get(),
-        ]);
-    }
+    return view('buku.edit', [
+        'buku' => $buku,
+        'daftarKategori' => Category::orderBy('name')->get(),
+        'daftarPenerbit' => Publisher::orderBy('name')->get(),
+        'daftarPenulis' => Author::orderBy('name')->get(),
+    ]);
+}
 
     // Memperbarui data buku
     public function update(Request $request, $id)
@@ -174,6 +177,7 @@ class BookController extends Controller
         return [
             'title' => 'required|string|max:255',
             'author_name' => 'required|string|max:255',
+            'author_id' => 'nullable|integer|exists:authors,id',
             'category_id' => 'required|exists:categories,id',
             'publisher_id' => 'required|exists:publishers,id',
             'price' => 'required|integer|min:0|max:99999999',
@@ -216,6 +220,9 @@ class BookController extends Controller
             'published_year.integer' => 'Tahun terbit harus berupa angka bulat.',
             'published_year.min' => 'Tahun terbit minimal 1900.',
             'published_year.max' => 'Tahun terbit maksimal 2100.',
+
+            'author_id.integer' => 'Pilihan penulis tidak valid.',
+            'author_id.exists' => 'Penulis yang dipilih tidak terdaftar.',
         ];
     }
 }

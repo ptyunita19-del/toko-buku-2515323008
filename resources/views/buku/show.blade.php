@@ -30,6 +30,14 @@
                     Penulis: {{ $buku->author_name }}
                 </p>
 
+
+        {{-- Penulis Terdaftar --}}
+        @if ($buku->author)
+                <p class="text-muted mb-1">
+                    Penulis Terdaftar: {{ $buku->author->name }}
+                </p>
+        @endif
+
                 {{-- Penerbit --}}
                 <p class="text-muted mb-1">
                     Penerbit: {{ $buku->publisher?->name ?? 'Belum diisi' }}

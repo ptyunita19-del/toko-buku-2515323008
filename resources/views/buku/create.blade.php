@@ -3,12 +3,14 @@
 @section('title', 'Tambah Buku — BookStore')
 
 @section('content')
+<div class="container py-4">
+
     <h1 class="mb-4">Tambah Buku</h1>
 
     <form action="{{ route('buku.store') }}"
           method="POST"
-          enctype="multipart/form-data"
-          style="max-width: 560px;">
+          enctype="multipart/form-data">
+
         @csrf
 
         <div class="mb-3">
@@ -16,6 +18,7 @@
             <input type="text" id="title" name="title"
                    class="form-control @error('title') is-invalid @enderror"
                    value="{{ old('title') }}">
+
             @error('title')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -26,15 +29,41 @@
             <input type="text" id="author_name" name="author_name"
                    class="form-control @error('author_name') is-invalid @enderror"
                    value="{{ old('author_name') }}">
+
             @error('author_name')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
 
         <div class="mb-3">
+        <label for="author_id" class="form-label">
+            Penulis Terdaftar (Opsional)
+        </label>
+
+        <select id="author_id" name="author_id"
+            class="form-select @error('author_id') is-invalid @enderror">
+
+        <option value="">-- Pilih Penulis --</option>
+
+            @foreach ($daftarPenulis as $penulis)
+            <option value="{{ $penulis->id }}"
+                @selected(old('author_id') == $penulis->id)>
+                {{ $penulis->name }}
+            </option>
+                @endforeach
+
+        </select>
+
+        @error('author_id')
+        <div class="invalid-feedback">{{ $message }}</div>
+        @enderror
+        </div>
+
+        <div class="mb-3">
             <label for="category_id" class="form-label">Kategori</label>
             <select id="category_id" name="category_id"
                     class="form-select @error('category_id') is-invalid @enderror">
+
                 <option value="">-- Pilih kategori --</option>
 
                 @foreach ($daftarKategori as $kategori)
@@ -43,6 +72,7 @@
                         {{ $kategori->name }}
                     </option>
                 @endforeach
+
             </select>
 
             @error('category_id')
@@ -54,6 +84,7 @@
             <label for="publisher_id" class="form-label">Penerbit</label>
             <select id="publisher_id" name="publisher_id"
                     class="form-select @error('publisher_id') is-invalid @enderror">
+
                 <option value="">-- Pilih penerbit --</option>
 
                 @foreach ($daftarPenerbit as $penerbit)
@@ -62,6 +93,7 @@
                         {{ $penerbit->name }} ({{ $penerbit->city }})
                     </option>
                 @endforeach
+
             </select>
 
             @error('publisher_id')
@@ -71,9 +103,10 @@
 
         <div class="mb-3">
             <label for="price" class="form-label">Harga (Rp)</label>
-            <input type="text" id="price" name="price"
+            <input type="number" id="price" name="price"
                    class="form-control @error('price') is-invalid @enderror"
-                   value="{{ old('price') }}">
+                   value="{{ old('price') }}"
+                   min="0" step="1">
 
             <div class="form-text">
                 Ketik angka saja, tanpa titik atau koma (contoh: 85000).
@@ -89,8 +122,7 @@
             <input type="number" id="stock" name="stock"
                    class="form-control @error('stock') is-invalid @enderror"
                    value="{{ old('stock', 0) }}"
-                   min="0"
-                   max="100000">
+                   min="0" max="100000" step="1">
 
             @error('stock')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -145,5 +177,8 @@
            class="btn btn-outline-secondary">
             Batal
         </a>
+
     </form>
+
+</div>
 @endsection

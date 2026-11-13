@@ -18,6 +18,7 @@ protected $fillable = [
     'cover',
     'published_year',
     'stock',
+    'author_id',
 ];
 
 
@@ -39,4 +40,9 @@ protected $fillable = [
                 : asset('images/sampul.jpg')
         );
     }
+
+    public function author(): BelongsTo
+{
+    return $this->belongsTo(Author::class);
+}
 }
