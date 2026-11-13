@@ -91,15 +91,6 @@ AI yang Digunakan: ChatGPT (OpenAI)
 
 **Penerapan:** Memperbarui `BookController.php` dan `buku/show.blade.php`. Buku dengan maupun tanpa Penulis Terdaftar berhasil ditampilkan.
 
-### 12. Pengujian Fitur Aplikasi
-
-**Pertanyaan kepada AI:** Meminta panduan menguji CRUD Penulis, validasi, relasi, proteksi hapus, dan pencarian katalog.
-
-**Bantuan yang digunakan:** Langkah pengujian melalui browser dan Laravel Tinker.
-
-**Penerapan:** Melakukan pengujian fitur dan memperbaiki masalah yang ditemukan.
-
-
 ## Kesimpulan
 
 ChatGPT digunakan sebagai alat bantu untuk memahami soal, mempelajari sintaks Laravel, memperoleh contoh kode, melakukan debugging, dan memeriksa hasil pengujian.
