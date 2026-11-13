@@ -59,15 +59,7 @@ AI yang Digunakan: ChatGPT (OpenAI)
 
 **Penerapan:** Memperbarui `buku/create.blade.php` dan `buku/edit.blade.php`. Penulis yang sudah tersimpan dapat ditampilkan kembali sebagai pilihan aktif.
 
-### 8. Memperbaiki Error Laravel
-
-**Pertanyaan kepada AI:** Meminta bantuan ketika muncul error `Undefined variable $categories` dan `Undefined variable $daftarPenulis`.
-
-**Bantuan yang digunakan:** Penjelasan mengenai kesesuaian nama variabel antara Controller dan Blade.
-
-**Penerapan:** Memperbaiki penggunaan variabel di file Blade serta menghapus dropdown yang salah tempat.
-
-### 9. Debugging Penyimpanan author_id
+### 8. Debugging Penyimpanan author_id
 
 **Pertanyaan kepada AI:** Meminta bantuan karena nilai `author_id` tetap `null` setelah memilih Penulis Terdaftar.
 
@@ -75,7 +67,7 @@ AI yang Digunakan: ChatGPT (OpenAI)
 
 **Penerapan:** Memeriksa nilai `author_id`, memperbaiki dan menguji proses penyimpanan, kemudian menghapus kode debugging sementara.
 
-### 10. Membuat Proteksi Hapus Penulis
+### 9. Membuat Proteksi Hapus Penulis
 
 **Pertanyaan kepada AI:** Meminta panduan agar Penulis yang masih digunakan oleh Buku tidak dapat dihapus.
 
@@ -83,7 +75,7 @@ AI yang Digunakan: ChatGPT (OpenAI)
 
 **Penerapan:** Memperbarui method `destroy()` pada AuthorController dan menguji pesan penolakan penghapusan.
 
-### 11. Menampilkan Penulis pada Detail Buku
+### 10. Menampilkan Penulis pada Detail Buku
 
 **Pertanyaan kepada AI:** Meminta bantuan menampilkan Penulis Terdaftar tanpa menghilangkan nama penulis lama.
 
